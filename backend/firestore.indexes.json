@@ -1,0 +1,89 @@
+{
+    "indexes": [
+        {
+            "collectionGroup": "bk.inventory",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "userEmail",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "bk.inventory",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "userEmail",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "isPurchased",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "bk.inventory",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "bk.inventory",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "isPurchased",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "bk.inventory",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "isDistributed",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        },
+        {
+            "collectionGroup": "bk.inventory",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "createdAt",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "createdAt",
+                    "order": "DESCENDING"
+                }
+            ]
+        }
+    ],
+    "fieldOverrides": []
+}

@@ -1,0 +1,87 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ============================================================
+    // 헬퍼 함수
+    // ============================================================
+
+    // 현재 사용자가 인증된 사용자인지 확인
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // 현재 사용자가 관리자인지 확인
+    function isAdmin() {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // 현재 사용자가 해당 문서의 소유자인지 확인
+    function isOwner(userEmail) {
+      return isAuthenticated() && request.auth.token.email == userEmail;
+    }
+
+    // ============================================================
+    // bk.inventory 컬렉션 (물품 신청 데이터)
+    // ============================================================
+    match /bk.inventory/{docId} {
+      // 읽기: 본인 데이터 또는 관리자
+      allow read: if isAuthenticated() &&
+        (isOwner(resource.data.userEmail) || isAdmin());
+
+      // 생성: 인증된 사용자 (본인 이메일로만 생성 가능)
+      allow create: if isAuthenticated() &&
+        request.resource.data.userEmail == request.auth.token.email &&
+        request.resource.data.isPurchased == false &&
+        request.resource.data.isDistributed == false &&
+        request.resource.data.itemName is string &&
+        request.resource.data.itemName.size() > 0 &&
+        request.resource.data.price is number &&
+        request.resource.data.price > 0 &&
+        request.resource.data.quantity is number &&
+        request.resource.data.quantity >= 1;
+
+      // 수정: 관리자는 모든 필드, 일반 사용자는 isPurchased=false인 본인 항목만
+      allow update: if isAuthenticated() && (
+        // 관리자: 모든 항목 수정 가능
+        isAdmin() ||
+        // 일반 사용자: 아직 구매 전 본인 항목만 수정 가능
+        (
+          isOwner(resource.data.userEmail) &&
+          resource.data.isPurchased == false
+        )
+      ) &&
+      // 핵심 규칙: isDistributed는 isPurchased가 true일 때만 true로 설정 가능
+      (
+        !request.resource.data.isDistributed ||
+        request.resource.data.isPurchased == true
+      );
+
+      // 삭제: 관리자 또는 구매 전 본인 항목만
+      allow delete: if isAuthenticated() && (
+        isAdmin() ||
+        (isOwner(resource.data.userEmail) && resource.data.isPurchased == false)
+      );
+    }
+
+    // ============================================================
+    // users 컬렉션 (사용자 권한 관리)
+    // ============================================================
+    match /users/{userId} {
+      // 읽기: 본인 데이터만 (관리자는 전체 읽기 가능)
+      allow read: if isAuthenticated() &&
+        (request.auth.uid == userId || isAdmin());
+
+      // 생성: 본인 UID로만 가능, role은 반드시 "user" (권한 상승 방지)
+      allow create: if isAuthenticated() &&
+        request.auth.uid == userId &&
+        request.resource.data.role == 'user';
+
+      // 수정/삭제: 관리자만 (역할 변경은 관리자 권한)
+      allow update, delete: if isAdmin();
+    }
+  }
+}
