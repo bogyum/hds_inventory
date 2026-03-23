@@ -8,7 +8,8 @@ import {
     History,
     LogOut,
     Package,
-    ShieldCheck
+    ShieldCheck,
+    Users
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -33,6 +34,7 @@ const userNavItems: NavItem[] = [
 
 const adminNavItems: NavItem[] = [
     { href: '/admin/dashboard', label: '전체 현황판', icon: LayoutDashboard },
+    { href: '/admin/users', label: '회원 관리', icon: Users },
 ];
 
 export function Sidebar({ role = 'user', userName, userEmail, onLogout }: SidebarProps) {

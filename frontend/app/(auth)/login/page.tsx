@@ -95,14 +95,14 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center px-4">
+        <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center px-4 relative">
             <div className="w-full max-w-[400px]">
                 {/* 로고 */}
                 <div className="flex flex-col items-center mb-8">
                     <div className="w-12 h-12 rounded-xl bg-[#4F46E5] flex items-center justify-center mb-4 shadow-lg shadow-indigo-200">
                         <Package className="w-6 h-6 text-white" />
                     </div>
-                    <h1 className="text-2xl font-bold text-[#0F172A]">bk.inventory</h1>
+                    <h1 className="text-2xl font-bold text-[#0F172A]">흥덕고 인벤토리 프로젝트</h1>
                     <p className="text-sm text-[#64748B] mt-1">교내 물품 구매 신청 시스템</p>
                 </div>
 
@@ -241,6 +241,11 @@ export default function LoginPage() {
                 <p className="text-center text-xs text-[#94A3B8] mt-6">
                     {mode === 'login' ? '계정이 없으신가요? 위의 회원가입 탭을 이용하세요.' : '이미 계정이 있으신가요? 로그인 탭을 이용하세요.'}
                 </p>
+            </div>
+
+            {/* 하단 개발자 표시 */}
+            <div className="absolute bottom-4 right-6 text-[11px] text-[#94A3B8] tracking-widest">
+                made by BK
             </div>
         </div>
     );
