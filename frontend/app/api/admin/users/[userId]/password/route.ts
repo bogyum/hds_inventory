@@ -3,7 +3,7 @@ import { adminAuth, verifyAdmin } from '@/lib/firebase-admin';
 
 export async function PATCH(
     request: Request,
-    { params }: { params: { userId: string } }
+    { params }: { params: Promise<{ userId: string }> }
 ) {
     try {
         const adminUid = await verifyAdmin(request);
