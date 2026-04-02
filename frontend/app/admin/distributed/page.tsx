@@ -41,7 +41,7 @@ function getPeriodRange(period: PeriodType): { start: Date; end: Date } {
     }
 }
 
-export default function AdminDashboardPage() {
+export default function AdminDistributedPage() {
     const { items, loading, error } = useAdminInventory();
 
     const [period, setPeriod] = useState<PeriodType>('week');
@@ -78,7 +78,7 @@ export default function AdminDashboardPage() {
         });
     }, [periodFiltered, selectedUser, searchQuery]);
 
-    const tableItems = useMemo(() => filteredItems.filter(i => !i.isDistributed), [filteredItems]);
+    const tableItems = useMemo(() => filteredItems.filter(i => i.isDistributed), [filteredItems]);
 
     // 요약 통계 (필터 적용된 데이터 기준)
     const stats = useMemo(() => {
@@ -162,8 +162,8 @@ export default function AdminDashboardPage() {
     return (
         <div>
             <Header
-                title="전체 현황판"
-                description="모든 교사의 물품 신청 현황을 관리하세요."
+                title="배부 현황판"
+                description="배부 완료된 품목들을 관리하세요."
             />
 
             {/* 요약 카드 */}
@@ -245,7 +245,7 @@ export default function AdminDashboardPage() {
                     />
                 </div>
 
-                {tableItems.length !== items.filter(i => !i.isDistributed).length && (
+                {tableItems.length !== items.filter(i => i.isDistributed).length && (
                     <span className="text-sm text-[#64748B]">{tableItems.length}건</span>
                 )}
             </div>

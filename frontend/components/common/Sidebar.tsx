@@ -9,7 +9,8 @@ import {
     LogOut,
     Package,
     ShieldCheck,
-    Users
+    Users,
+    CheckCircle
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -34,6 +35,7 @@ const userNavItems: NavItem[] = [
 
 const adminNavItems: NavItem[] = [
     { href: '/admin/dashboard', label: '전체 현황판', icon: LayoutDashboard },
+    { href: '/admin/distributed', label: '배부 현황판', icon: CheckCircle },
     { href: '/admin/users', label: '회원 관리', icon: Users },
 ];
 
