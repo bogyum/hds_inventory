@@ -104,6 +104,7 @@ export default function RequestPage() {
                         <div className="space-y-1.5">
                             <Label htmlFor="itemName" className="text-xs font-medium text-[#64748B]">
                                 물품명 <span className="text-red-500">*</span>
+                                <span className="text-xs font-normal text-[#64748B] ml-0.5">: 한번에 하나의 물품을 신청해주세요</span>
                             </Label>
                             <Input
                                 id="itemName"
@@ -136,6 +137,7 @@ export default function RequestPage() {
                         <div className="space-y-1.5">
                             <Label htmlFor="itemUrl" className="text-xs font-medium text-[#64748B]">
                                 물품 링크 <span className="text-[#94A3B8]">(선택)</span>
+                                <span className="text-xs font-normal text-[#64748B] ml-0.5">: 물품은 11번가와 G마켓에서 찾아주세요.</span>
                             </Label>
                             <Input
                                 id="itemUrl"

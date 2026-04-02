@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { format, startOfDay, endOfDay, startOfWeek, endOfWeek, startOfMonth, endOfMonth, subMonths } from 'date-fns';
+import { format, startOfMonth, endOfMonth, subMonths } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { Search, ShoppingCart, CheckCircle, Package, TrendingUp, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -24,27 +24,25 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
 import { InventoryItem } from '@/lib/types';
 
-type PeriodType = 'day' | 'week' | 'month' | 'lastMonth';
+type PeriodType = 'month' | 'lastMonth' | 'all';
 
 function getPeriodRange(period: PeriodType): { start: Date; end: Date } {
     const now = new Date();
     switch (period) {
-        case 'day':
-            return { start: startOfDay(now), end: endOfDay(now) };
-        case 'week':
-            return { start: startOfWeek(now, { weekStartsOn: 1 }), end: endOfWeek(now, { weekStartsOn: 1 }) };
         case 'month':
             return { start: startOfMonth(now), end: endOfMonth(now) };
         case 'lastMonth':
             const lastMonthDate = subMonths(now, 1);
             return { start: startOfMonth(lastMonthDate), end: endOfMonth(lastMonthDate) };
+        case 'all':
+            return { start: new Date(0), end: new Date('2099-12-31') };
     }
 }
 
 export default function AdminDistributedPage() {
     const { items, loading, error } = useAdminInventory();
 
-    const [period, setPeriod] = useState<PeriodType>('week');
+    const [period, setPeriod] = useState<PeriodType>('month');
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedUser, setSelectedUser] = useState<string>('all');
     const [updatingIds, setUpdatingIds] = useState<Set<string>>(new Set());
@@ -153,10 +151,9 @@ export default function AdminDistributedPage() {
     };
 
     const PERIOD_TABS: { value: PeriodType; label: string }[] = [
-        { value: 'day', label: '오늘' },
-        { value: 'week', label: '이번 주' },
         { value: 'month', label: '이번 달' },
         { value: 'lastMonth', label: '지난 달' },
+        { value: 'all', label: '전체' },
     ];
 
     return (

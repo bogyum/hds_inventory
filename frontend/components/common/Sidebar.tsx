@@ -57,9 +57,12 @@ export function Sidebar({ role = 'user', userName, userEmail, onLogout }: Sideba
                             <Package className="w-4 h-4 text-white" />
                         </div>
                         <div>
-                            <span className="text-sm font-semibold text-[#0F172A]">bk.inventory</span>
+                            <div className="flex flex-col">
+                                <span className="text-sm font-semibold text-[#0F172A]">hds.inventory</span>
+                                <span className="text-[10px] text-[#64748B] mt-0.5">흥덕고등학교 물품신청 페이지</span>
+                            </div>
                             {role === 'admin' && (
-                                <div className="flex items-center gap-1 mt-0.5">
+                                <div className="flex items-center gap-1 mt-1">
                                     <ShieldCheck className="w-3 h-3 text-[#4F46E5]" />
                                     <span className="text-[11px] text-[#4F46E5] font-medium">관리자</span>
                                 </div>
