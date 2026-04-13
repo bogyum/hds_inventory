@@ -15,7 +15,40 @@ import {
     getDocs,
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { InventoryItem, InventoryItemForm } from '@/lib/types';
+import { InventoryItem, InventoryItemForm, UserProfile } from '@/lib/types';
+
+// ====================================================
+// 관리자: 전체 회원 목록 실시간 조회 (users 컬렉션)
+// ====================================================
+export function useAdminUsers() {
+    const [users, setUsers] = useState<UserProfile[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const q = query(
+            collection(db, 'users'),
+            orderBy('createdAt', 'desc')
+        );
+
+        const unsubscribe = onSnapshot(q,
+            (snapshot) => {
+                const data = snapshot.docs.map(doc => doc.data()) as UserProfile[];
+                setUsers(data);
+                setLoading(false);
+            },
+            (err) => {
+                console.error('Firestore 유저 로드 오류:', err);
+                setError('회원 정보를 불러오는 중 오류가 발생했습니다.');
+                setLoading(false);
+            }
+        );
+
+        return () => unsubscribe();
+    }, []);
+
+    return { users, loading, error };
+}
 
 // ====================================================
 // 일반 교사: 본인 신청 목록 실시간 조회

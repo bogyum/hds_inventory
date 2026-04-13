@@ -39,7 +39,7 @@ function getPeriodRange(period: PeriodType): { start: Date; end: Date } {
     }
 }
 
-export default function AdminDistributedPage() {
+export default function AdminUnavailablePage() {
     const { items, loading, error } = useAdminInventory();
 
     const [period, setPeriod] = useState<PeriodType>('month');
@@ -76,7 +76,7 @@ export default function AdminDistributedPage() {
         });
     }, [periodFiltered, selectedUser, searchQuery]);
 
-    const tableItems = useMemo(() => filteredItems.filter(i => i.isDistributed && !i.isUnavailable), [filteredItems]);
+    const tableItems = useMemo(() => filteredItems.filter(i => i.isUnavailable), [filteredItems]);
 
     // 요약 통계 (필터 적용된 데이터 기준)
     const stats = useMemo(() => {
@@ -159,8 +159,8 @@ export default function AdminDistributedPage() {
     return (
         <div>
             <Header
-                title="배부 현황판"
-                description="배부 완료된 품목들을 관리하세요."
+                title="구매불가 목록"
+                description="구매가 불가능한 품목들을 확인하세요."
             />
 
             {/* 요약 카드 */}
@@ -242,7 +242,7 @@ export default function AdminDistributedPage() {
                     />
                 </div>
 
-                {tableItems.length !== items.filter(i => i.isDistributed && !i.isUnavailable).length && (
+                {tableItems.length !== items.filter(i => i.isUnavailable).length && (
                     <span className="text-sm text-[#64748B]">{tableItems.length}건</span>
                 )}
             </div>
@@ -258,7 +258,7 @@ export default function AdminDistributedPage() {
                 ) : tableItems.length === 0 ? (
                     <div className="py-16 text-center">
                         <Package className="w-10 h-10 text-[#E5E7EB] mx-auto mb-3" />
-                        <p className="text-sm text-[#64748B]">해당 기간에 신청 내역이 없습니다.</p>
+                        <p className="text-sm text-[#64748B]">해당 기간에 구매불가 처리된 항목이 없습니다.</p>
                     </div>
                 ) : (
                     <>

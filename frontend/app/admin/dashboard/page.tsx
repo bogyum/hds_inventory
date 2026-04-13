@@ -76,17 +76,17 @@ export default function AdminDashboardPage() {
         });
     }, [periodFiltered, selectedUser, searchQuery]);
 
-    const tableItems = useMemo(() => filteredItems.filter(i => !i.isDistributed), [filteredItems]);
+    const tableItems = useMemo(() => filteredItems.filter(i => !i.isPurchased && !i.isUnavailable), [filteredItems]);
 
     // 요약 통계 (필터 적용된 데이터 기준)
     const stats = useMemo(() => {
-        const purchasedItems = filteredItems.filter(i => i.isPurchased && !i.isUnavailable);
+        const purchasedItems = filteredItems.filter(i => i.isPurchased);
         return {
             total: filteredItems.length,
             purchased: purchasedItems.length,
-            distributed: filteredItems.filter(i => i.isDistributed && !i.isUnavailable).length,
+            distributed: filteredItems.filter(i => i.isDistributed).length,
             unavailable: filteredItems.filter(i => i.isUnavailable).length,
-            totalAmount: filteredItems.reduce((sum, i) => sum + (i.isUnavailable ? 0 : (i.price * i.quantity)), 0),
+            totalAmount: filteredItems.reduce((sum, i) => sum + (i.price * i.quantity), 0),
             purchasedAmount: purchasedItems.reduce((sum, i) => sum + (i.price * i.quantity), 0),
         };
     }, [filteredItems]);
@@ -159,8 +159,8 @@ export default function AdminDashboardPage() {
     return (
         <div>
             <Header
-                title="전체 현황판"
-                description="모든 교사의 물품 신청 현황을 관리하세요."
+                title="물품신청 대기목록"
+                description="현재 접수되어 구매를 기다리고 있는 물품들을 관리하세요."
             />
 
             {/* 요약 카드 */}
@@ -242,7 +242,7 @@ export default function AdminDashboardPage() {
                     />
                 </div>
 
-                {tableItems.length !== items.filter(i => !i.isDistributed).length && (
+                {tableItems.length !== items.filter(i => !i.isPurchased && !i.isUnavailable).length && (
                     <span className="text-sm text-[#64748B]">{tableItems.length}건</span>
                 )}
             </div>

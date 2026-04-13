@@ -10,7 +10,10 @@ import {
     Package,
     ShieldCheck,
     Users,
-    CheckCircle
+    CheckCircle,
+    XCircle,
+    ShoppingCart,
+    BarChart
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -34,9 +37,12 @@ const userNavItems: NavItem[] = [
 ];
 
 const adminNavItems: NavItem[] = [
-    { href: '/admin/dashboard', label: '전체 현황판', icon: LayoutDashboard },
+    { href: '/admin/dashboard', label: '물품신청 대기목록', icon: LayoutDashboard },
+    { href: '/admin/purchased', label: '구매 현황판', icon: ShoppingCart },
     { href: '/admin/distributed', label: '배부 현황판', icon: CheckCircle },
+    { href: '/admin/unavailable', label: '구매불가 목록', icon: XCircle },
     { href: '/admin/users', label: '회원 관리', icon: Users },
+    { href: '/admin/statistics', label: '통계', icon: BarChart },
 ];
 
 export function Sidebar({ role = 'user', userName, userEmail, onLogout }: SidebarProps) {

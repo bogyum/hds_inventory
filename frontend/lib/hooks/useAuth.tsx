@@ -11,7 +11,7 @@ import {
     signOut,
     updateProfile,
 } from 'firebase/auth';
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc, serverTimestamp, increment } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 import { UserProfile } from '@/lib/types';
 
@@ -52,7 +52,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             const docRef = doc(db, 'users', uid);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                setUserProfile(docSnap.data() as UserProfile);
+                const data = docSnap.data() as UserProfile;
+                setUserProfile(data);
+                
+                // 세션별 방문수 증분 로직
+                if (typeof window !== 'undefined' && !sessionStorage.getItem('access_logged')) {
+                    sessionStorage.setItem('access_logged', 'true');
+                    try {
+                        await updateDoc(docRef, {
+                            loginCount: increment(1),
+                            lastLoginAt: serverTimestamp()
+                        });
+                        // 로컬 상태에도 반영
+                        setUserProfile(prev => prev ? { ...prev, loginCount: (prev.loginCount || 0) + 1 } : prev);
+                    } catch (e) {
+                        console.error('방문 기록 업데이트 실패:', e);
+                    }
+                }
             } else {
                 setUserProfile(null);
             }

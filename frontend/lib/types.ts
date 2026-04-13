@@ -34,6 +34,8 @@ export interface UserProfile {
     email: string;
     name: string;
     role: 'admin' | 'user';
+    loginCount?: number;
+    lastLoginAt?: Timestamp;
 }
 
 // 상태 타입
