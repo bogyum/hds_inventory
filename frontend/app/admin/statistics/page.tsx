@@ -177,7 +177,7 @@ export default function AdminStatisticsPage() {
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
                                 <XAxis dataKey="date" tick={{fontSize: 12, fill: '#64748B'}} tickMargin={10} />
                                 <YAxis tickFormatter={(val) => `${(val / 10000).toFixed(0)}만`} tick={{fontSize: 12, fill: '#64748B'}} width={55} />
-                                <Tooltip formatter={(value: number) => [`${value.toLocaleString()}원`, '금액']} labelStyle={{color: '#0F172A'}} />
+                                <Tooltip formatter={(value: any) => [`${value.toLocaleString()}원`, '금액']} labelStyle={{color: '#0F172A'}} />
                                 <Line type="monotone" dataKey="amount" stroke="#4F46E5" strokeWidth={3} dot={{ r: 4, fill: '#4F46E5' }} activeDot={{ r: 6 }} />
                             </LineChart>
                         </ResponsiveContainer>
@@ -203,7 +203,7 @@ export default function AdminStatisticsPage() {
                                         <Cell key={`cell-${index}`} fill={entry.color} />
                                     ))}
                                 </Pie>
-                                <Tooltip formatter={(value: number) => [`${value}건`, '건수']} />
+                                <Tooltip formatter={(value: any) => [`${value}건`, '건수']} />
                                 <Legend verticalAlign="bottom" height={36} iconType="circle" />
                             </PieChart>
                         </ResponsiveContainer>
@@ -219,7 +219,7 @@ export default function AdminStatisticsPage() {
                                 <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#E2E8F0" />
                                 <XAxis type="number" tickFormatter={(val) => `${(val / 10000).toFixed(0)}만`} tick={{fontSize: 12, fill: '#64748B'}} />
                                 <YAxis dataKey="name" type="category" tick={{fontSize: 12, fill: '#0F172A', fontWeight: 500}} width={70} />
-                                <Tooltip cursor={{fill: '#F8FAFC'}} formatter={(value: number, name: string, props: any) => [`${value.toLocaleString()}원 (총 ${props.payload.quantity}개 신청)`, '누적 금액']} />
+                                <Tooltip cursor={{fill: '#F8FAFC'}} formatter={(value: any, name: string, props: any) => [`${value.toLocaleString()}원 (총 ${props.payload.quantity}개 신청)`, '누적 금액']} />
                                 <Bar dataKey="amount" fill="#3B82F6" radius={[0, 4, 4, 0]} barSize={20} />
                             </BarChart>
                         </ResponsiveContainer>
@@ -235,7 +235,7 @@ export default function AdminStatisticsPage() {
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
                                 <XAxis dataKey="name" tick={{fontSize: 12, fill: '#0F172A'}} tickMargin={10} angle={-15} textAnchor="end" />
                                 <YAxis tick={{fontSize: 12, fill: '#64748B'}} allowDecimals={false} />
-                                <Tooltip cursor={{fill: '#F8FAFC'}} formatter={(value: number) => [`${value}개`, '신청 수량']} />
+                                <Tooltip cursor={{fill: '#F8FAFC'}} formatter={(value: any) => [`${value}개`, '신청 수량']} />
                                 <Bar dataKey="quantity" fill="#10B981" radius={[4, 4, 0, 0]} barSize={40} />
                             </BarChart>
                         </ResponsiveContainer>
@@ -251,7 +251,7 @@ export default function AdminStatisticsPage() {
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
                                 <XAxis dataKey="name" tick={{fontSize: 12, fill: '#0F172A'}} tickMargin={10} />
                                 <YAxis tick={{fontSize: 12, fill: '#64748B'}} allowDecimals={false} />
-                                <Tooltip cursor={{fill: '#F8FAFC'}} formatter={(value: number) => [`${value}회`, '누적 방문수']} />
+                                <Tooltip cursor={{fill: '#F8FAFC'}} formatter={(value: any) => [`${value}회`, '누적 방문수']} />
                                 <Bar dataKey="visits" fill="#8B5CF6" radius={[4, 4, 0, 0]} barSize={40} />
                             </BarChart>
                         </ResponsiveContainer>
@@ -267,7 +267,7 @@ export default function AdminStatisticsPage() {
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
                                 <XAxis dataKey="name" tick={{fontSize: 12, fill: '#0F172A'}} tickMargin={10} />
                                 <YAxis tick={{fontSize: 12, fill: '#64748B'}} allowDecimals={false} />
-                                <Tooltip cursor={{fill: '#F8FAFC'}} formatter={(value: number) => [`${value}회 (건)`, '총 신청 건수']} />
+                                <Tooltip cursor={{fill: '#F8FAFC'}} formatter={(value: any) => [`${value}회 (건)`, '총 신청 건수']} />
                                 <Bar dataKey="requestCount" fill="#F59E0B" radius={[4, 4, 0, 0]} barSize={40} />
                             </BarChart>
                         </ResponsiveContainer>
