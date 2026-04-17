@@ -219,7 +219,7 @@ export default function AdminStatisticsPage() {
                                 <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#E2E8F0" />
                                 <XAxis type="number" tickFormatter={(val) => `${(val / 10000).toFixed(0)}만`} tick={{fontSize: 12, fill: '#64748B'}} />
                                 <YAxis dataKey="name" type="category" tick={{fontSize: 12, fill: '#0F172A', fontWeight: 500}} width={70} />
-                                <Tooltip cursor={{fill: '#F8FAFC'}} formatter={(value: any, name: string, props: any) => [`${value.toLocaleString()}원 (총 ${props.payload.quantity}개 신청)`, '누적 금액']} />
+                                <Tooltip cursor={{fill: '#F8FAFC'}} formatter={(value: any, name: any, props: any) => [`${value.toLocaleString()}원 (총 ${props.payload.quantity}개 신청)`, '누적 금액']} />
                                 <Bar dataKey="amount" fill="#3B82F6" radius={[0, 4, 4, 0]} barSize={20} />
                             </BarChart>
                         </ResponsiveContainer>
